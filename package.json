@@ -9,7 +9,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server"
+    "start": "node backend/server"
   },
   "repository": {
     "type": "git",
