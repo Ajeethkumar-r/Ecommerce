@@ -1,5 +1,6 @@
 const products = [
   {
+    //id removed because mongodb add id for each data by default
     name: 'Airpods Wireless Bluetooth Headphones',
     image: '/images/airpods.jpg',
     description:
