@@ -8,9 +8,9 @@ const connectDB = async () => {
       useNewUrlParser: true,
       //   useCreateIndex: true,  <-- To avoid warnings in console dont use
     })
-    console.log(`Mongoose connected: ${conn.connection.host}`)
+    console.log(`Mongoose connected: ${conn.connection.host}`.cyan.underline)
   } catch (error) {
-    console.log(`Error: ${error.message}`) //to know the errors should use 'error.message'
+    console.log(`Error: ${error.message}`.red.underline.bold) //to know the errors should use 'error.message'
     process.exit(1) //to exit the process '1' for false '0' for true
   }
 }
