@@ -3,7 +3,7 @@ import colors from 'colors'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 
-import productRoutes from './Routes/productRoutes.js'
+import productRoutes from './Routes/productRoutes.js' //get the productRoutes file to make routes wrok flowly in our server.js
 
 dotenv.config()
 
