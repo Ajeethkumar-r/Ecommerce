@@ -1,6 +1,6 @@
 import express, { Router } from 'express'
 import asyncHandler from 'express-async-handler'
-const routes = express()
+const router = express.Router()
 import Product from '../models/productModel.js'
 
 //this route is to get the products from our db
@@ -25,9 +25,10 @@ router.get(
     if (product) {
       res.json(product)
     } else {
-      res.status(404).json({ message: 'product not found' }) //give 404 product not found if the product is not found in our db
-    }
+      res.status(404)
+      throw new Error('porduct NOT FOUND')
+    } //give 404 product not found if the product id is in the same format but not matched to our real id in our db then give me 'product NOT FOUND'
   })
 )
 
-export default routes
+export default router
