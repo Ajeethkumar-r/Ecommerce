@@ -9,7 +9,7 @@
     "react-bootstrap": "^1.6.1"
   },
   "name": "ecommerce",
-  "description": "electronic products",
+  "description": "best products",
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",

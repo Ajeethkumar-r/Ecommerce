@@ -1,10 +1,10 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import colors from 'colors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 
-import productRoutes from './Routes/productRoutes.js' //get the productRoutes file to make routes wrok flowly in our server.js
+import productRoutes from './routes/productRoutes.js' //get the productRoutes file to make routes wrok flowly in our server.js
 
 dotenv.config()
 

@@ -2,16 +2,15 @@ import mongoose from 'mongoose'
 
 const connectDB = async () => {
   try {
-    //remember to use try catch
     const conn = await mongoose.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      //   useCreateIndex: true,  <-- To avoid warnings in console dont use
+      // useCreateIndex: true,
     })
-    console.log(`Mongoose connected: ${conn.connection.host}`.cyan.underline)
+    console.log(`Mongodb connected: ${conn.connection.host}`.cyan.underline) //monogoDB connection statement if error occurs change the connection string once again
   } catch (error) {
-    console.log(`Error: ${error.message}`.red.underline.bold) //to know the errors should use 'error.message'
-    process.exit(1) //to exit the process '1' for false '0' for true
+    console.log(`ERROR: ${error.message}`.red.underline.bold)
+    process.exit(1)
   }
 }
 
