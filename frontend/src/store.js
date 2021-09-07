@@ -5,13 +5,19 @@ import {
   productListReducer,
   productDetailsReducer,
 } from './reducers/productReducers'
+import { cartReducer } from './reducers/cartReducers'
 
 const reducer = combineReducers({
   productList: productListReducer, // Get our 'productListReducer' for 'products' we have and set it to gobal state container using 'combineReducer()'
   productDetails: productDetailsReducer, // Get our 'productDetailsReducer' for 'single product' we have and set it to gobal state container using 'combineReducer()'
+  cart: cartReducer,
 })
 
+const cartItemsFromStorage = localStorage.getItem('cartItems')
+  ? JSON.parse(localStorage.getItem('cartItems'))
+  : []
 const intialState = {
+  cart: { cartItems: cartItemsFromStorage },
   // all the products are available as intialState bcozyy  :> while we adding the product to the cart it is done by using the products we already have through 'productList and productDetails'
 }
 

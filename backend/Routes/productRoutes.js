@@ -20,7 +20,7 @@ router.get(
       res.json(product)
     } else {
       res.status(404)
-      throw new error('PRODUCT NOT FOUND')
+      throw new Error('PRODUCT NOT FOUND')
     }
   })
 )
