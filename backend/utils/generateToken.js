@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken'
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
+    //JWT_SECRET  is simply the info which we want to send
+    expiresIn: '30d', //expire date here :30 days
   })
 }
 
