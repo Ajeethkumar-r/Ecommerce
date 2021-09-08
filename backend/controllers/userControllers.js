@@ -1,0 +1,29 @@
+//userControllers decide the do's and dont's for the userRoutes(this points only the routing ) all other actions are determined by the controllers
+
+import asyncHandler from 'express-async-handler'
+import User from '../models/userModel.js'
+
+//@desc auth user and get token
+//@route POST/api/users/login
+//@access public
+const authUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body
+
+  const user = await User.findOne({ email }) //findOne method is used to get a document from the mongodb if the condition db rules for the document matches ,here it is used to get the email from the db  addtionally findOne provides the first argument if no.of arguments are are given to the method
+
+  if (user && (await user.matchPassword(password))) {
+    //here we check both email and password of the user the await promise is taken from tge usermodel there we put validation for the password which checks the password the user entered as a plain text if that matches with the password in our db data then the below info will be provided
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: null,
+    })
+  } else {
+    res.status(401)
+    throw new Error('Invalid email or password')
+  }
+})
+
+export { authUser }
