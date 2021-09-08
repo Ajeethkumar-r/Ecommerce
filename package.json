@@ -5,11 +5,12 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.3",
     "react-bootstrap": "^1.6.1"
   },
   "name": "ecommerce",
-  "description": "best products", 
+  "description": "best products",
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",
