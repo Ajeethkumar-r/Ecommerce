@@ -32,8 +32,9 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 }
 
 userSchema.pre('save', async function (next) {
+  //before we save synthetic sugar of create methos the async function runs
   if (!this.isModified('password')) {
-    next()
+    next() //if the password is not modified then dont hash the password so proceed next()
   }
 
   const salt = await bcrypt.genSalt(10)
