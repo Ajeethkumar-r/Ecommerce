@@ -27,4 +27,21 @@ const authUser = asyncHandler(async (req, res) => {
   }
 })
 
-export { authUser }
+const getUserProfile = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+  const user = await User.findById(req.user._id) //this is the id we get from the decoded id by using req.user
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User Not Found')
+  }
+})
+
+export { authUser, getUserProfile }
