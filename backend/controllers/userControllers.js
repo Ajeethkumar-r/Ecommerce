@@ -1,5 +1,6 @@
 //userControllers decide the do's and dont's for the userRoutes(this points only the routing ) all other actions are determined by the controllers
 
+import e from 'express'
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
@@ -27,6 +28,35 @@ const authUser = asyncHandler(async (req, res) => {
   }
 })
 
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body
+  const existUser = await User.findOne({ email })
+
+  if (existUser) {
+    res.status(400)
+    throw new Error('User already exists')
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+  })
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    })
+  } else {
+    res.status(404)
+    throw new Error(' Invalid User data ')
+  }
+})
+
 const getUserProfile = asyncHandler(async (req, res) => {
   //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
   const user = await User.findById(req.user._id) //this is the id we get from the decoded id by using req.user
@@ -44,4 +74,4 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-export { authUser, getUserProfile }
+export { authUser, registerUser, getUserProfile }
