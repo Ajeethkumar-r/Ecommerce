@@ -6,19 +6,28 @@ import {
   productDetailsReducer,
 } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
 
 const reducer = combineReducers({
   productList: productListReducer, // Get our 'productListReducer' for 'products' we have and set it to gobal state container using 'combineReducer()'
   productDetails: productDetailsReducer, // Get our 'productDetailsReducer' for 'single product' we have and set it to gobal state container using 'combineReducer()'
   cart: cartReducer,
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
-  ? JSON.parse(localStorage.getItem('cartItems'))
+  ? JSON.parse(localStorage.getItem('cartItems')) //get cart items from local storage
   : []
+
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo')) //get userInfo from local storage
+  : null
+
 const intialState = {
-  cart: { cartItems: cartItemsFromStorage },
-  // all the products are available as intialState bcozyy  :> while we adding the product to the cart it is done by using the products we already have through 'productList and productDetails'
+  cart: { cartItems: cartItemsFromStorage }, // all the products are available as intialState bcozyy  :> while we adding the product to the cart it is done by using the products we already have through 'productList and productDetails'
+
+  userLogin: { userInfo: userInfoFromStorage },
 }
 
 const middleware = [thunk]
