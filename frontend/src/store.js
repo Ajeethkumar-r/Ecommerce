@@ -31,9 +31,15 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')) //get userInfo from local storage
   : null
 
-const intialState = {
-  cart: { cartItems: cartItemsFromStorage }, // all the products are available as intialState bcozyy  :> while we adding the product to the cart it is done by using the products we already have through 'productList and productDetails'
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
+  ? JSON.parse(localStorage.getItem('shippingAddress')) //get userInfo from local storage
+  : {}
 
+const intialState = {
+  cart: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+  }, // all the products are available as intialState bcozyy  :> while we adding the product to the cart it is done by using the products we already have through 'productList and productDetails'
   userLogin: { userInfo: userInfoFromStorage },
 }
 
