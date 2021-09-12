@@ -6,7 +6,7 @@ import connectDB from './config/db.js'
 
 import productRoutes from './routes/productRoutes.js' //get the productRoutes file to make routes work flowly in our server.js
 import userRoutes from './routes/userRoutes.js' //get the userRoutes file to make routes work flowly in our server.js
-
+import orderRoutes from './routes/orderRoutes.js'
 dotenv.config() //to use the env variables we need to call it's config here
 
 connectDB() //need to call "connectDB"
@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes) // make path for our productRoutes to get the access
 app.use('/api/users', userRoutes) // make path for our userRoutes to get the access
+app.use('/api/orders', orderRoutes)
 
 app.use(notFounud)
 

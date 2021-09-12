@@ -47,7 +47,7 @@ const ShippingScreen = ({ history }) => {
             type='text'
             placeholder='Enter postal code'
             value={postalcode}
-            required
+            //required
             onChange={(e) => setPostalCode(e.target.value)}
           ></Form.Control>
         </Form.Group>
