@@ -24,7 +24,6 @@ app.use('/api/users', userRoutes) // make path for our userRoutes to get the acc
 app.use('/api/orders', orderRoutes)
 
 app.use(notFounud)
-
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000

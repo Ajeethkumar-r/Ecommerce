@@ -8,7 +8,9 @@ import { createOrder } from '../actions/orderActions'
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
+
   const cart = useSelector((state) => state.cart)
+
   //calculate price
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -20,8 +22,12 @@ const PlaceOrderScreen = ({ history }) => {
   cart.shippingPrice = addDecimals(cart.itemsPrice > 500 ? 0 : 25)
   cart.taxPrice = addDecimals(Number((0.8 * cart.itemsPrice).toFixed(2)))
 
-  cart.totalPrice = addDecimals(
-    Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
+  cart.totalPrice = Math.round(
+    addDecimals(
+      Number(cart.itemsPrice) +
+        Number(cart.shippingPrice) +
+        Number(cart.taxPrice)
+    )
   )
 
   const orderCreate = useSelector((state) => state.orderCreate)
@@ -40,7 +46,7 @@ const PlaceOrderScreen = ({ history }) => {
         orderItems: cart.orderItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.orderItems,
+        itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
@@ -59,7 +65,7 @@ const PlaceOrderScreen = ({ history }) => {
               <p>
                 <strong>Address:</strong>
                 {cart.shippingAddress.address},{cart.shippingAddress.postalcode}
-                ,{cart.shippingAddress.city},{cart.shippingAddress.placeState},
+                {cart.shippingAddress.city},{cart.shippingAddress.placeState},
                 {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
@@ -133,6 +139,7 @@ const PlaceOrderScreen = ({ history }) => {
                   <Col>₹{cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 {error && <Message variant='danger'>{error}</Message>}
               </ListGroup.Item>
