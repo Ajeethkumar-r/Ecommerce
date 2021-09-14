@@ -12,7 +12,7 @@ const protect = asyncHandler(async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(' ')[1]
-      const decoded = jwt.verify(token, process.env.JWT_SECRET) //the JWT.verify() filters and automatically check whether ther signed jwt token is hashed based on HMAC(Hash Based Message Authentication) or asymmetric key the proceed the bellow function which we specify
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) //the JWT.verify() filters and automatically check whether ther signed jwt token is hashed based on HMAC(Hash Based Message Authentication) or asymmetric key then proceed the below function which we specify
       req.user = await User.findById(decoded.id).select('-password')
 
       next()
