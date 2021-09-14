@@ -23,6 +23,11 @@ app.use('/api/products', productRoutes) // make path for our productRoutes to ge
 app.use('/api/users', userRoutes) // make path for our userRoutes to get the access
 app.use('/api/orders', orderRoutes)
 
+// paypal route for clientId
+app.get('/api/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+)
+
 app.use(notFounud)
 app.use(errorHandler)
 
