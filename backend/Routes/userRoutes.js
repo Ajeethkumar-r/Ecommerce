@@ -6,10 +6,11 @@ import {
   registerUser,
   getUserProfile,
   updateUserProfile,
+  getUsers,
 } from '../controllers/userControllers.js'
-import { protect } from '../middleware/authMiddleware.js'
+import { protect, admin } from '../middleware/authMiddleware.js'
 
-router.route('/').post(registerUser)
+router.route('/').post(registerUser).get(protect, admin, getUsers)
 router.post('/login', authUser) //we only do post method here, if we activate both endpoints instead of 'post' 'route' is preferable
 router
   .route('/profile')
