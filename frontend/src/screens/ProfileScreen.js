@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 
+
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -15,6 +16,7 @@ const ProfileScreen = ({ history }) => {
   const [message, setMessage] = useState(null)
 
   const dispatch = useDispatch()
+
 
   const userDetails = useSelector(state => state.userDetails)
   const { loading, error, user } = userDetails
@@ -49,6 +51,7 @@ const ProfileScreen = ({ history }) => {
       dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
+
 
   return (
     <Row>
@@ -138,7 +141,7 @@ const ProfileScreen = ({ history }) => {
                         <i className='fas fa-times' style={{color:'red'}}></i>
                       )}</td>
                       <td>
-                        <LinkContainer to={`/order/${order.id}`}>
+                        <LinkContainer  to={`/order/${order._id}`}>
                           <Button variant='light' className='btn-sm'>Details</Button>
                         </LinkContainer>
                       </td>

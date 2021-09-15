@@ -15,7 +15,7 @@ const OrderScreen = ({ match }) => {
   const dispatch = useDispatch()
 
   const orderDetails = useSelector((state) => state.orderDetails)
-  const { order, loading, error } = orderDetails
+  const { order, loading, error  } = orderDetails
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
@@ -28,13 +28,12 @@ const OrderScreen = ({ match }) => {
       return (Math.round(num * 100) / 100).toFixed(2)
     }
     order.itemsPrice = addDecimals(
-      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+        order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     )
   }
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal')
-      console.log(clientId)
       const script = document.createElement('script')
       script.type = 'text/javascript'
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
@@ -80,11 +79,11 @@ const OrderScreen = ({ match }) => {
                 <strong>Name:</strong> {order.user.name}
               </p>
               <p>
-                <strong>Email:</strong>
-                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                <strong>Email: </strong>
+                <a href={`mailto:${order.user.email}`}> {order.user.email}</a>
               </p>
               <p>
-                <strong>Address:</strong>
+                <strong>Address: </strong>
                 {order.shippingAddress.address},
                 {order.shippingAddress.postalcode}
                 {order.shippingAddress.city},{order.shippingAddress.placeState},

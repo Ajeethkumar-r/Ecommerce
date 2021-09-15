@@ -198,8 +198,7 @@ export const listUsers = () => async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(
-      '/api/users', //here the profile is actual id ,if the user wants to edit his/her profile , the route directly takes the porfile as id
-      config //user object contains the whole data for each user
+      '/api/users',config 
     )
 
     dispatch({

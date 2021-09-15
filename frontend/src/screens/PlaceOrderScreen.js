@@ -37,8 +37,8 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       history.push(`/order/${order._id}`)
     }
-    // eslint-disable-next-line
-  }, [history, success])
+   
+  }, [history, success, order._id])
 
   const placeOrderHandler = () => {
     dispatch(
@@ -148,6 +148,7 @@ const PlaceOrderScreen = ({ history }) => {
                 <Button
                   type='button'
                   className='btn-block'
+                  style={{width:'100%'}}
                   disabled={cart.cartItems.length === 0}
                   onClick={placeOrderHandler}
                 >
