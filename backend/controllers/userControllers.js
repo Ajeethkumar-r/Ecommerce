@@ -104,4 +104,18 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
-export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers }
+
+const deleteUser = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+  const user = await User.findById(req.params.id) //this is the id we get from the decoded id by using req.user
+
+  if (user) {
+    await user.remove()
+    res.json({ message:'User removed'})
+   
+  } else {
+    res.status(404) 
+    throw new Error('User Not Found')
+  }
+})
+export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers, deleteUser }

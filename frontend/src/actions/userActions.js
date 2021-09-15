@@ -17,6 +17,9 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_DETAILS_RESET,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL,
 } from '../constants/userConstants'
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
@@ -205,7 +208,8 @@ export const listUsers = () => async (dispatch, getState) => {
 
     dispatch({
       type: USER_LIST_SUCCESS,
-      payload: data,
+      payload:data
+      
     })
   } catch (error) {
     dispatch({
@@ -217,3 +221,39 @@ export const listUsers = () => async (dispatch, getState) => {
     })
   }
 }
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+  //to update the profile initially we need the data to edit that data of each user is located in the user object  so we take the user object as props
+  try {
+    dispatch({
+      type: USER_DELETE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`, //here we pass ghe token
+      },
+    }
+
+    await axios.delete(
+      `/api/users/${id}`,config 
+    )
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
