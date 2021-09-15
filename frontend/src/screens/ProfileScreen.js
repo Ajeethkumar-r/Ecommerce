@@ -112,16 +112,16 @@ const ProfileScreen = ({ history }) => {
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>
+        
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
-        ) : (
+        ):(
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
                 <th>ID</th>
-                {/* <th>DATE</th> */}
                 <th>TOTAL</th>
                 <th>PAID</th>
                 <th>DELIVERED</th>
@@ -132,7 +132,6 @@ const ProfileScreen = ({ history }) => {
                   {orders.map(order => (
                     <tr key={order._id}>
                       <td>{order._id}</td>
-                      {/* <td>{order.createdAt}</td> */}
                       <td>{order.totalPrice}</td>
                       <td>{order.isPaid ? order.paidAt : (
                         <i className='fas fa-times' style={{color:'red'}}></i>
@@ -141,7 +140,7 @@ const ProfileScreen = ({ history }) => {
                         <i className='fas fa-times' style={{color:'red'}}></i>
                       )}</td>
                       <td>
-                        <LinkContainer  to={`/order/${order._id}`}>
+                        <LinkContainer  to={`/order/${order._id}/pay`}>
                           <Button variant='light' className='btn-sm'>Details</Button>
                         </LinkContainer>
                       </td>
@@ -149,7 +148,9 @@ const ProfileScreen = ({ history }) => {
                 ))}
             </tbody>
           </Table>
-        )}
+        )
+         
+        }
       </Col>
     </Row>
   )
