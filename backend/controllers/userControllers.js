@@ -136,7 +136,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
-    user.isAdmin = req.body.isAdmin
+    user.isAdmin = req.body.isAdmin //we dont need to use user.isAdmin bcoz it is a checkbox with 0 or 1 already user.isAdmin sets to false(0) if we want to make the user admin we only need to set isAdmin true that is done by req.user.body if we checked it changes to (1)
 
     const updatedUser = await user.save()
 
