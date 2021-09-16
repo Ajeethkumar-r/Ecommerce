@@ -17,4 +17,17 @@ const getProductByID = asyncHandler(async (req, res) => {
   }
 })
 
-export { getProducts, getProductByID } //export these to productRoutes
+const deleteProduct = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+  const product = await Product.findById(req.params.id) //this is the id we get from the decoded id by using req.product
+
+  if (product) {
+    await product.remove()
+    res.json({ message: 'product removed' })
+  } else {
+    res.status(404)
+    throw new Error('product Not Found')
+  }
+})
+
+export { getProducts, getProductByID, deleteProduct } //export these to productRoutes
