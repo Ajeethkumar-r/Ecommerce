@@ -30,4 +30,53 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 })
 
-export { getProducts, getProductByID, deleteProduct } //export these to productRoutes
+const createProduct = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+  const product = new Product({
+    name: 'sample name',
+    user: req.user._id,
+    description: 'sample description',
+    image: '/images/sample.jpg',
+    price: 0,
+    numReviews: 0,
+    category: 'sample category',
+    brand: 'sample brand',
+    countInStock: 0,
+  })
+
+  const createdProduct = await product.save()
+  res.status(201).json(createdProduct)
+})
+
+const updateProduct = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+
+  const { name, price, description, image, category, brand, countInStock } =
+    req.body
+
+  const product = await Product.findById(req.product._id)
+
+  if (product) {
+    product.name = name // name= req.body   it is from the body
+    product.price = price
+    product.description = description
+    product.image = image
+    product.category = category
+    product.brand = brand
+    product.countInStock = countInStock
+
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
+
+export {
+  getProducts,
+  getProductByID,
+  deleteProduct,
+  createProduct,
+  updateProduct,
+} //export these to productRoutes
