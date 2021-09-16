@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
   productListReducer,
   productDetailsReducer,
+  productDeleteReducer,
 } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
@@ -26,6 +27,7 @@ import {
 const reducer = combineReducers({
   productList: productListReducer, // Get our 'productListReducer' for 'products' we have and set it to gobal state container using 'combineReducer()'
   productDetails: productDetailsReducer, // Get our 'productDetailsReducer' for 'single product' we have and set it to gobal state container using 'combineReducer()'
+  productDelete: productDeleteReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
