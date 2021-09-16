@@ -104,18 +104,61 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
-
 const deleteUser = asyncHandler(async (req, res) => {
   //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
   const user = await User.findById(req.params.id) //this is the id we get from the decoded id by using req.user
 
   if (user) {
     await user.remove()
-    res.json({ message:'User removed'})
-   
+    res.json({ message: 'User removed' })
   } else {
-    res.status(404) 
+    res.status(404)
     throw new Error('User Not Found')
   }
 })
-export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers, deleteUser }
+
+const getUserById = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+  const user = await User.findById(req.params.id).select('-password') //this is the id we get from the decoded id by using req.user
+
+  if (user) {
+    res.json(user)
+  } else {
+    res.status(404)
+    throw new Error('User Not Found')
+  }
+})
+
+const updateUser = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+  const user = await User.findById(req.params.id) //this is the id we get from the decoded id by using req.user
+
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.isAdmin = req.body.isAdmin
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User Not Found')
+  }
+})
+
+export {
+  authUser,
+  registerUser,
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  deleteUser,
+  getUserById,
+  updateUser,
+}
