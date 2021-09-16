@@ -19,7 +19,7 @@ import Message from '../components/Message'
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const dispatch = useDispatch() //be aware of using useSelector
-  const productDetails = useSelector((state) => state.productDetails)
+  const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails //should be declared outsie of useEffect()
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)
@@ -59,7 +59,7 @@ const ProductScreen = ({ history, match }) => {
               </ListGroupItem>
 
               <ListGroupItem>
-                <h4>₹{product.price}</h4>
+                <h4>${product.price}</h4>
               </ListGroupItem>
             </ListGroup>
           </Col>
@@ -93,9 +93,9 @@ const ProductScreen = ({ history, match }) => {
                         <Form.Control
                           as='select'
                           value={qty}
-                          onChange={(e) => setQty(e.target.value)}
+                          onChange={e => setQty(e.target.value)}
                         >
-                          {[...Array(product.countInStock).keys()].map((x) => (
+                          {[...Array(product.countInStock).keys()].map(x => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
                             </option>
