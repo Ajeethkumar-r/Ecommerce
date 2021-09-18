@@ -17,6 +17,13 @@ const ProductListScreen = ({ history, match }) => {
   const productList = useSelector(state => state.productList)
   const { loading, error, products } = productList
 
+  const productDelete = useSelector(state => state.productDelete)
+  const {
+    // loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete
+
   const productCreate = useSelector(state => state.productCreate)
   const {
     loading: loadingCreate,
@@ -25,25 +32,16 @@ const ProductListScreen = ({ history, match }) => {
     product: createdProduct,
   } = productCreate
 
-  const productDelete = useSelector(state => state.productDelete)
-  const {
-    // loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = productDelete
-
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET })
-
     if (!userInfo.isAdmin) {
-      history.push('login')
+      history.push('/login')
     }
-
     if (successCreate) {
-      history.push(`/admin/products/${createdProduct._id}/edit`)
+      history.push(`/admin/product/${createdProduct._id}/edit`) //createdProduct is newly we create and get this product info to edit screen
     } else {
       dispatch(listProducts())
     }
@@ -78,10 +76,10 @@ const ProductListScreen = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
-      {/* {loadingDelete && <Loader />} */}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loadingCreate && <Loader />}
       {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
+      {/* {loadingDelete && <Loader />} */}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
