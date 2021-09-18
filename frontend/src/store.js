@@ -24,14 +24,15 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderListMyReducer,
+  orderListReducer,
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
   productList: productListReducer, // Get our 'productListReducer' for 'products' we have and set it to gobal state container using 'combineReducer()'
   productDetails: productDetailsReducer, // Get our 'productDetailsReducer' for 'single product' we have and set it to gobal state container using 'combineReducer()'
-  productDelete: productDeleteReducer,
-  productCreate: productCreateReducer,
-  productUpdate: productUpdateReducer,
+  productDelete: productDeleteReducer, // admin
+  productCreate: productCreateReducer, // admin
+  productUpdate: productUpdateReducer, // admin
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -39,11 +40,12 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
+  userUpdate: userUpdateReducer, // admin
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
-  userUpdate: userUpdateReducer,
+  orderList: orderListReducer, // admin
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
