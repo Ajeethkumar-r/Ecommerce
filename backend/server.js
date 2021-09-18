@@ -1,3 +1,4 @@
+import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
@@ -7,6 +8,8 @@ import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js' //get the productRoutes file to make routes work flowly in our server.js
 import userRoutes from './routes/userRoutes.js' //get the userRoutes file to make routes work flowly in our server.js
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/upoladRoutes.js'
+
 dotenv.config() //to use the env variables we need to call it's config here
 
 connectDB() //need to call "connectDB"
@@ -22,11 +25,14 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes) // make path for our productRoutes to get the access
 app.use('/api/users', userRoutes) // make path for our userRoutes to get the access
 app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
 
 // paypal route for clientId
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads'))) // make our uploads folder in the root as static(which directly loads in our browser)
 
 app.use(notFounud)
 app.use(errorHandler)
