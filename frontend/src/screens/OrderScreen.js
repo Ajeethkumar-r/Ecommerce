@@ -15,20 +15,17 @@ const OrderScreen = ({ match }) => {
   const dispatch = useDispatch()
 
   const orderDetails = useSelector((state) => state.orderDetails)
-  const { order, loading, error  } = orderDetails
+  const { order, loading, error } = orderDetails
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
 
   if (!loading) {
-    //loading: these prices placeOrder is already loaded
-
-    //calculate price
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
     }
     order.itemsPrice = addDecimals(
-        order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     )
   }
   useEffect(() => {
