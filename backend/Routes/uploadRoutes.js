@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
 
   filename(req, file, cb) {
     cb(
-      'null',
+      null,
       `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
     )
   },
@@ -23,7 +23,7 @@ function checkFileTypes(file, cb) {
   const mimetype = filetypes.test(file.mimetype) // to know type of data
 
   if (extname && mimetype) {
-    return cb('null', true) // true indicates go with callback
+    return cb(null, true) // true indicates go with callback
   } else {
     cb('Images only!')
   }

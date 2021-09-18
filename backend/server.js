@@ -8,7 +8,7 @@ import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js' //get the productRoutes file to make routes work flowly in our server.js
 import userRoutes from './routes/userRoutes.js' //get the userRoutes file to make routes work flowly in our server.js
 import orderRoutes from './routes/orderRoutes.js'
-import uploadRoutes from './routes/upoladRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config() //to use the env variables we need to call it's config here
 
