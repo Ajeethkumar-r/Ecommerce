@@ -4,8 +4,8 @@ import Product from '../models/productModel.js'
 const getProducts = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword ? {
     name: {
-      $regex: req.query.keyword,
-      $options: 'i',
+      $regex: req.query.keyword, //regex is for instead of typing full name of product we can type some letters of product and search 
+      $options: 'i', //caseInsensitive : 'i'
     }
   }: {}
     

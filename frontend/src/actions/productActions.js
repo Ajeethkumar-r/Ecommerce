@@ -23,7 +23,7 @@ import {
 export const listProducts = (keyword = '') => async dispatch => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`)
+    const { data } = await axios.get(`/api/products?keyword=${keyword}`)  // we pass query string bcoz if we dont put keyword and leave it as empty it should also work
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
   } catch (error) {
     dispatch({
