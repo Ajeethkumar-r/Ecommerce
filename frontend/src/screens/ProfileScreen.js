@@ -133,10 +133,10 @@ const ProfileScreen = ({ history }) => {
                     <tr key={order._id}>
                       <td>{order._id}</td>
                       <td>{order.totalPrice}</td>
-                      <td>{order.isPaid ? order.paidAt : (
+                      <td>{order.isPaid ? order.paidAt.substring(0,10) : (
                         <i className='fas fa-times' style={{color:'red'}}></i>
                       )}</td>
-                      <td>{order.isDelivered ? order.deliveredAt : (
+                      <td>{order.isDelivered ? order.deliveredAt.substring(0,10) : (
                         <i className='fas fa-times' style={{color:'red'}}></i>
                       )}</td>
                       <td>

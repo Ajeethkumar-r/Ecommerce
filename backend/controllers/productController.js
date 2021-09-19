@@ -73,10 +73,49 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 })
 
+
+const updateProductReview = asyncHandler(async (req, res) => {
+  //this should give the user profile if the token in authMiddleware matches  ::> then getUserProfile pases to the userRoutes with it's data
+
+  const { rating, comment } = req.body
+
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(r => r.user === req.user._id)
+    
+    if (alreadyReviewed) {
+      res.status(400)
+      throw new  Error('Product already reviewed')
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user:req.user._id
+    }
+   
+    product.reviews.push(review)
+    product. numReviews = product.reviews.length
+    product.rating = product.rating.reduce((acc, item) => item.rating + acc, 0)
+    /product.rating.length
+
+    await product.save()
+    res.send(201).json({maesage:'Product reviewed successfully'})
+
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
+
+
 export {
   getProducts,
   getProductByID,
   deleteProduct,
   createProduct,
   updateProduct,
+  updateProductReview,
 } //export these to productRoutes
