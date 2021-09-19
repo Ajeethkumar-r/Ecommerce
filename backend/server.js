@@ -1,5 +1,6 @@
 import path from 'path'
 import express from 'express'
+import morgan from 'morgan'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import { notFounud, errorHandler } from './middleware/errorMiddleware.js'
@@ -15,6 +16,10 @@ dotenv.config() //to use the env variables we need to call it's config here
 connectDB() //need to call "connectDB"
 
 const app = express()
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 
 app.use(express.json()) // make our server to accept the json format data that is send from the POSTMAN app for both developing and testing  (piece of middleware)
 
