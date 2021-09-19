@@ -82,7 +82,7 @@ const updateProductReview = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
 
   if (product) {
-    const alreadyReviewed = product.reviews.find(r => r.user === req.user._id)
+    const alreadyReviewed = product.reviews.find(r => r.user.toString() === req.user._id.toString())
     
     if (alreadyReviewed) {
       res.status(400)
@@ -98,11 +98,11 @@ const updateProductReview = asyncHandler(async (req, res) => {
    
     product.reviews.push(review)
     product. numReviews = product.reviews.length
-    product.rating = product.rating.reduce((acc, item) => item.rating + acc, 0)
-    /product.rating.length
+    product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0)
+    /product.reviews.length
 
     await product.save()
-    res.send(201).json({maesage:'Product reviewed successfully'})
+    res.status(201).json({maesage:'Product reviewed successfully'})
 
   } else {
     res.status(404)
