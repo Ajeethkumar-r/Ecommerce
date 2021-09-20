@@ -38,7 +38,11 @@ const Homescreen = ({ match }) => {
               </Col>
             ))}
           </Row>
-          <Paginate pages={pages} page={page} keyword={keyword} />
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ''}
+          />
         </>
       )}
     </>
