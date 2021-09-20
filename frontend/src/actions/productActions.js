@@ -20,23 +20,28 @@ import {
   PRODUCT_REVIEW_CREATE_REQUEST,
 } from '../constants/productConstants'
 
-export const listProducts = (keyword = '') => async dispatch => {
-  try {
-    dispatch({ type: PRODUCT_LIST_REQUEST })
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`)  // we pass query string bcoz if we dont put keyword and leave it as empty it should also work
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
+export const listProducts =
+  (keyword = '', pageNumber = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST })
+      const { data } = await axios.get(
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      )
+      // we pass query string bcoz if we dont put keyword and leave it as empty it should also work
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
   }
-}
 
-export const listProductDetails = id => async dispatch => {
+export const listProductDetails = (id) => async (dispatch) => {
   //props here taken is 'id' bcoz we set redux state for each product  :> `/api/prodcuts/${id}`
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
@@ -53,7 +58,7 @@ export const listProductDetails = id => async dispatch => {
   }
 }
 
-export const deleteProduct = id => async (dispatch, getState) => {
+export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_DELETE_REQUEST,
@@ -118,7 +123,7 @@ export const createProduct = () => async (dispatch, getState) => {
   }
 }
 
-export const updateProduct = product => async (dispatch, getState) => {
+export const updateProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_UPDATE_REQUEST,
@@ -156,36 +161,36 @@ export const updateProduct = product => async (dispatch, getState) => {
   }
 }
 
-export const reviewProduct = (productId,review) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: PRODUCT_REVIEW_CREATE_REQUEST,
-    })
+export const reviewProduct =
+  (productId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PRODUCT_REVIEW_CREATE_REQUEST,
+      })
 
-    const {
-      userLogin: { userInfo },
-    } = getState()
+      const {
+        userLogin: { userInfo },
+      } = getState()
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+
+      await axios.post(`/api/products/${productId}/reviews`, review, config)
+
+      dispatch({
+        type: PRODUCT_REVIEW_CREATE_SUCCESS,
+      })
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_REVIEW_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
     }
-
-    await axios.post( `/api/products/${productId}/reviews`, review, config ) 
-
-    dispatch({
-      type: PRODUCT_REVIEW_CREATE_SUCCESS,
-    })
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_REVIEW_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
   }
-}
-
