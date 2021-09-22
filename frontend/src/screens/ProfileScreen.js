@@ -7,7 +7,6 @@ import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 
-
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -17,17 +16,16 @@ const ProfileScreen = ({ history }) => {
 
   const dispatch = useDispatch()
 
-
-  const userDetails = useSelector(state => state.userDetails)
+  const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails
 
-  const userLogin = useSelector(state => state.userLogin)
+  const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
 
-  const orderListMy = useSelector(state => state.orderListMy)
+  const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
   useEffect(() => {
@@ -43,7 +41,7 @@ const ProfileScreen = ({ history }) => {
       }
     }
   }, [dispatch, history, userInfo, user])
-  const submitHandler = e => {
+  const submitHandler = (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setMessage('password do not match')
@@ -51,7 +49,6 @@ const ProfileScreen = ({ history }) => {
       dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
-
 
   return (
     <Row>
@@ -71,7 +68,7 @@ const ProfileScreen = ({ history }) => {
               type='name'
               placeholder='Enter Fullname'
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -81,7 +78,7 @@ const ProfileScreen = ({ history }) => {
               type='email'
               placeholder='Enter email'
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -91,7 +88,7 @@ const ProfileScreen = ({ history }) => {
               type='password'
               placeholder='Enter password'
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -101,7 +98,7 @@ const ProfileScreen = ({ history }) => {
               type='password'
               placeholder='Confirm password'
               value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -112,12 +109,12 @@ const ProfileScreen = ({ history }) => {
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>
-        
+
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
-        ):(
+        ) : (
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
@@ -128,29 +125,37 @@ const ProfileScreen = ({ history }) => {
                 <th></th>
               </tr>
             </thead>
-                <tbody>
-                  {orders.map(order => (
-                    <tr key={order._id}>
-                      <td>{order._id}</td>
-                      <td>{order.totalPrice}</td>
-                      <td>{order.isPaid ? order.paidAt.substring(0,10) : (
-                        <i className='fas fa-times' style={{color:'red'}}></i>
-                      )}</td>
-                      <td>{order.isDelivered ? order.deliveredAt.substring(0,10) : (
-                        <i className='fas fa-times' style={{color:'red'}}></i>
-                      )}</td>
-                      <td>
-                        <LinkContainer  to={`/order/${order._id}/pay`}>
-                          <Button variant='light' className='btn-sm'>Details</Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                ))}
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    )}
+                  </td>
+                  <td>
+                    {order.isDelivered ? (
+                      order.deliveredAt.substring(0, 10)
+                    ) : (
+                      <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}/pay`}>
+                      <Button variant='light' className='btn-sm'>
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </Table>
-        )
-         
-        }
+        )}
       </Col>
     </Row>
   )

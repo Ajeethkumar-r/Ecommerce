@@ -6,8 +6,15 @@ import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails, payOrder,deliverOrder } from '../actions/orderActions'
-import { ORDER_PAY_RESET,ORDER_DELIVER_RESET } from '../constants/orderConstants'
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../actions/orderActions'
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from '../constants/orderConstants'
 
 const OrderScreen = ({ match }) => {
   const orderId = match.params.id
@@ -22,10 +29,9 @@ const OrderScreen = ({ match }) => {
 
   const orderDeliver = useSelector((state) => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
-  
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -50,7 +56,7 @@ const OrderScreen = ({ match }) => {
 
     if (!order || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET })
-      dispatch({type:ORDER_DELIVER_RESET})
+      dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderId))
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -62,11 +68,15 @@ const OrderScreen = ({ match }) => {
   }, [dispatch, orderId, successPay, order, successDeliver])
 
   const successPaymentHandler = (paymentResult) => {
-       dispatch(payOrder(orderId, paymentResult))
-    }
+    dispatch(payOrder(orderId, paymentResult))
+  }
 
   const deliverHandler = () => {
     dispatch(deliverOrder(order))
+  }
+
+  const refreshHandler = () => {
+    window.location.reload(true)
   }
 
   return loading ? (
@@ -75,6 +85,10 @@ const OrderScreen = ({ match }) => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
+      <Message variant='success'>Go and relaod once for order details</Message>
+      <Button onClick={refreshHandler} variant='primary'>
+        Reload
+      </Button>{' '}
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>
@@ -97,7 +111,10 @@ const OrderScreen = ({ match }) => {
               </p>
 
               {order.isDelivered ? (
-                <Message variant='success'> Delivered on {order.deliveredAt}</Message>
+                <Message variant='success'>
+                  {' '}
+                  Delivered on {order.deliveredAt}
+                </Message>
               ) : (
                 <Message variant='danger'>Not Delivered</Message>
               )}
@@ -193,18 +210,23 @@ const OrderScreen = ({ match }) => {
                     />
                   )}
                 </ListGroup.Item>
-                  )}
-                  {loadingDeliver && <Loader/>}
-                  {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                    <ListGroup.Item>
-                      <Button type='button'
-                        className='btn-block'
-                        style={{ width: '100%' }}
-                        onClick={deliverHandler}>
-                        Mark As Delivered
-                        </Button>
-                      </ListGroup.Item>
-                  )}
+              )}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn-block'
+                      style={{ width: '100%' }}
+                      onClick={deliverHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
