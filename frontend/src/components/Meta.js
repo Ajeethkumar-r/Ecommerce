@@ -12,7 +12,7 @@ function Meta({ title, description, keywords }) {
 }
 
 Meta.defaultProps = {
-  title: 'welcome to Gshop',
+  title: 'welcome to Gshop | Dev special',
   description: 'we sell best products at best quality',
   keywords: 'electroincs',
 }
