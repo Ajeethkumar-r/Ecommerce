@@ -6,10 +6,10 @@ import colors from 'colors'
 import { notFounud, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
-import { userRoutes } from '../backend/routes/userRoutes.js' //get the userRoutes file to make routes work flowly in our server.js
-import { orderRoutes } from '../backend/routes/orderRoutes.js'
-import { uploadRoutes } from '../backend/routes/uploadRoutes.js'
-import { productRoutes } from '../backend/routes/productRoutes.js' //get the productRoutes file to make routes work flowly in our server.js
+import userRoutes from '../backend/routes/userRoutes.js' //get the userRoutes file to make routes work flowly in our server.js
+import orderRoutes from '../backend/routes/orderRoutes.js'
+import uploadRoutes from '../backend/routes/uploadRoutes.js'
+import productRoutes from '../backend/routes/productRoutes.js' //get the productRoutes file to make routes work flowly in our server.js
 
 dotenv.config() //to use the env variables we need to call it's config here
 
