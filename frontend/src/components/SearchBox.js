@@ -11,6 +11,7 @@ const SearchBox = ({ history }) => {
       setKeyword('')
     } else {
       history.push('/')
+      setKeyword('')
     }
   }
 
