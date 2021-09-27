@@ -1,5 +1,5 @@
 # Ecommerce
- Livelink to vist https://ajeethecommerce.herokuapp.com/ (Desktop/Laptop)
+ Livelink to vist https://ajec.herokuapp.com/ (Desktop/Laptop)
  
  
  payment:
