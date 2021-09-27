@@ -8,10 +8,8 @@ const SearchBox = ({ history }) => {
     e.preventDefault()
     if (keyword) {
       history.push(`/search/${keyword}`)
-      setKeyword('')
     } else {
       history.push('/')
-      setKeyword('')
     }
   }
 
