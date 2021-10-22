@@ -2,8 +2,7 @@
  Livelink to vist https://ajec.herokuapp.com/ (Desktop/Laptop)
  
  
- payment:
- 
+ payment!!!
  emailId: sb-vuegj7649994@personal.example.com / sb-43zn07823184@personal.example.com
  
  password: userpay1
